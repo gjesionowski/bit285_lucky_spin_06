@@ -4,6 +4,8 @@ namespace LuckySpin.Models
 {
     public class Player
     {
+        public long Id { get; set; }
+
         [Display(Prompt = " Your First Name")]
         [Required(ErrorMessage = "Please enter your Name", AllowEmptyStrings = false)]
         public string FirstName { get; set; }
