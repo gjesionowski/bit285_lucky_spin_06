@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LuckySpin.Models;
+using LuckySpin.ViewModels; 
 
 namespace LuckySpin.Controllers
 {
@@ -15,7 +16,7 @@ namespace LuckySpin.Controllers
         /***
          * Controller Constructor
          */
-        public SpinnerController()
+        public SpinnerController(Repository repository)
         {
             random = new Random();
             //TODO: Inject the Repository singleton
@@ -35,21 +36,26 @@ namespace LuckySpin.Controllers
         {
             if (!ModelState.IsValid) { return View(); }
 
-            // TODO: Add the Player to the Repository
+            // TODO: Add the Player to the Repository - CHECK
+            repository.player = player; // pulls from the parameter
 
-            // TODO: Build a new SpinItViewModel object with data from the Player and pass it to the View
+            // TODO: Build a new SpinItViewModel object with data from the Player and pass it to the View - CHECK
+            SpinViewModel spinViewModel = new SpinViewModel();
+            spinViewModel.FirstName = player.FirstName;
+            spinViewModel.Balance = player.Balance;
+            spinViewModel.Luck = player.Luck;
 
-            return RedirectToAction("SpinIt", player); 
+            return RedirectToAction("SpinIt", spinViewModel); 
         }
 
         /***
          * Spin Action - Game Play
          **/  
-         public IActionResult SpinIt(Player player) //TODO: replace the parameter with a ViewModel
+         public IActionResult SpinIt(SpinViewModel spinViewModel) //TODO: replace the parameter with a ViewModel - CHECK
         {
             Spin spin = new Spin
             {
-                Luck = player.Luck,
+                Luck = spinViewModel.Luck,
                 A = random.Next(1, 10),
                 B = random.Next(1, 10),
                 C = random.Next(1, 10)
@@ -62,8 +68,8 @@ namespace LuckySpin.Controllers
 
             //TODO: Clean up ViewBag using a SpinIt ViewModel instead
             ViewBag.ImgDisplay = (spin.IsWinning) ? "block" : "none";
-            ViewBag.FirstName = player.FirstName;
-            ViewBag.Balance = player.Balance;
+            ViewBag.FirstName = spinViewModel.FirstName;
+            ViewBag.Balance = spinViewModel.Balance;
 
             return View("SpinIt", spin);
         }

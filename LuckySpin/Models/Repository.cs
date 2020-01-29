@@ -6,12 +6,13 @@ namespace LuckySpin.Models
     {
         private List<Spin> spins = new List<Spin>();
 
-        Player player = new Player(); // added Player to the repository
-       //Property
-       public IEnumerable<Spin> PlayerSpins {
+        public Player player { get; set; } // make this a property to be added to later
+
+        //Property
+        public IEnumerable<Spin> PlayerSpins {
 
             get { return spins; }
-       }
+        }
 
         //Access method
         public void AddSpin(Spin s)
