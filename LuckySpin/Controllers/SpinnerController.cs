@@ -11,16 +11,16 @@ namespace LuckySpin.Controllers
     public class SpinnerController : Controller
     {
         Random random;
-        Repository repository;
+        Repository repository = new Repository();
 
         /***
          * Controller Constructor
          */
-        public SpinnerController(Repository repository)
+        public SpinnerController(Repository repositoryIn)
         {
             random = new Random();
             //TODO: Inject the Repository singleton
-            repository = new Repository();
+            repository = repositoryIn; // = new Repository();
         }
 
         /***
@@ -36,6 +36,7 @@ namespace LuckySpin.Controllers
         {
             if (!ModelState.IsValid) { return View(); }
 
+            //Repository repository = new Repository();
             // TODO: Add the Player to the Repository - CHECK
             repository.player = player; // pulls from the parameter
 
@@ -71,7 +72,7 @@ namespace LuckySpin.Controllers
             ViewBag.FirstName = spinViewModel.FirstName;
             ViewBag.Balance = spinViewModel.Balance;
 
-            return View("SpinIt", spin);
+            return View("SpinIt", spinViewModel);
         }
 
         /***
