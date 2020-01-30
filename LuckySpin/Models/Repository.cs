@@ -20,5 +20,11 @@ namespace LuckySpin.Models
         {
             spins.Add(s);
         }
+
+        public bool ClearSpins()
+        {
+            spins.Clear();
+                return true;
+        }
     }
 }

@@ -1,9 +1,12 @@
-﻿@model LuckySpin.Models.Player
+﻿@model LuckySpin.ViewModels.IndexViewModel
 <!-- TODO: Change model to a IndexViewModel-->
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "_Layout";
 }
+
+@inject LuckySpin.Models.Repository Repo
+
 <h2>Pick your Number</h2>
 <form asp-route="Spinner/Index">
     <fieldset>
@@ -33,3 +36,4 @@
     </fieldset>
     <input type="submit" value="Start the Game" />
 </form>
+    <a href="/Spinner/ClearGame" value="Clear Game History">Clear Game History</a>

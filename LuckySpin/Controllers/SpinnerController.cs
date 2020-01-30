@@ -89,7 +89,14 @@ namespace LuckySpin.Controllers
          **/
          public IActionResult LuckList()
         {
-                return View(_repository.PlayerSpins);
+            return View(_repository.PlayerSpins);
+        }
+        [HttpGet]
+        public IActionResult ClearGame()
+        {
+            _repository.ClearSpins();
+            //return RedirectToPage("Index");
+            return View("ClearGame");
         }
     }
 }
