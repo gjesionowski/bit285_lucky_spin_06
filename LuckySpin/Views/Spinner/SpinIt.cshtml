@@ -11,6 +11,6 @@
     Current Balance: $<span class="emphasis">@ViewBag.Balance</span>
 </div>
 <span style="display:@ViewBag.ImgDisplay">
-    <h2 style="margin-left:0">Congratulations @ViewBag.FirstName,<br />You Win with @Model.Luck!</h2>
+    <h2 style="margin-left:0">Congratulations @ViewBag.FirstName,<br />You Win with @Transform.numberToText(Model.Luck)!</h2>
     <img src="/Images/LuckySpinCoins.jpg" class="animated bounce" alt="Coins" />
 </span>

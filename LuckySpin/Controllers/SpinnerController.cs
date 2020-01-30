@@ -43,7 +43,8 @@ namespace LuckySpin.Controllers
             // TODO: Build a new SpinItViewModel object with data from the Player and pass it to the View - CHECK
             SpinViewModel sVM = new SpinViewModel();
             sVM.FirstName = player.FirstName;
-            sVM.Balance = player.StartingBalance;
+            player.Balance = player.StartingBalance;
+            sVM.Balance = _repository.PlayerOne.Balance;
             sVM.Luck = player.Luck;
 
             return RedirectToAction("SpinIt", sVM); 
@@ -63,7 +64,7 @@ namespace LuckySpin.Controllers
                 B = random.Next(1, 10),
                 C = random.Next(1, 10)
             };
-            // _repository.PlayerOne.Balance = _repository.PlayerOne.StartingBalance;
+            // _repository.PlayerOne.Balance = spinVM.Balance;
             _repository.PlayerOne.ChargeSpin(); // charge fee even before you know the results
 
             spinVM.IsWinning = (spinVM.A == spinVM.Luck || spinVM.B == spinVM.Luck || spinVM.C == spinVM.Luck);
