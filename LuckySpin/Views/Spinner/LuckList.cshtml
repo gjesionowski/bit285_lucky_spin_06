@@ -1,15 +1,18 @@
-﻿@model IEnumerable<LuckySpin.Models.Spin> 
+﻿@model IEnumerable<LuckySpin.ViewModels.SpinViewModel>
+
 @{
     Layout = "_Layout";
     int row = 0;
     string className;
 }
+@inject LuckySpin.Models.Repository Repo
 <h1>Out of Luck</h1>
 <table>
     <thead><tr><th>Spin #</th><th>Result</th></tr></thead>
     <tbody>
         <!-- TODO: Use the ViewModel-->
-        @foreach( LuckySpin.Models.Spin spin in @Model ){
+        
+        @foreach( LuckySpin.ViewModels.SpinViewModel spin in Repo.PlayerSpins){
             row += 1;
             className = (spin.IsWinning) ? "winner" : "";
             <tr class="@className">

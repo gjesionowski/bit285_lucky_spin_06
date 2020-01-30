@@ -64,8 +64,9 @@ namespace LuckySpin.Controllers
                 B = random.Next(1, 10),
                 C = random.Next(1, 10)
             };
-            // _repository.PlayerOne.Balance = spinVM.Balance;
-            _repository.PlayerOne.ChargeSpin(); // charge fee even before you know the results
+
+            if (!(_repository.PlayerOne.ChargeSpin()))      // charge fee even before you know the results
+                return View("LuckList");          // boot the player if they're out of balance. Show previous plays.
 
             spinVM.IsWinning = (spinVM.A == spinVM.Luck || spinVM.B == spinVM.Luck || spinVM.C == spinVM.Luck);
 
