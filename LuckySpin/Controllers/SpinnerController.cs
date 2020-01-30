@@ -63,7 +63,7 @@ namespace LuckySpin.Controllers
                 B = random.Next(1, 10),
                 C = random.Next(1, 10)
             };
-            _repository.PlayerOne.Balance = _repository.PlayerOne.StartingBalance;
+            // _repository.PlayerOne.Balance = _repository.PlayerOne.StartingBalance;
             _repository.PlayerOne.ChargeSpin(); // charge fee even before you know the results
 
             spinVM.IsWinning = (spinVM.A == spinVM.Luck || spinVM.B == spinVM.Luck || spinVM.C == spinVM.Luck);
