@@ -7,7 +7,7 @@ namespace LuckySpin.Models
     {
         private List<SpinViewModel> spins = new List<SpinViewModel>();
 
-        public Player player { get; set; } // make this a property to be added to later
+        public Player PlayerOne { get; set; } // make this a property to be added to later
 
         //Property
         public IEnumerable<SpinViewModel> PlayerSpins 

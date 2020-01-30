@@ -38,13 +38,13 @@ namespace LuckySpin.Controllers
 
             //Repository repository = new Repository();
             // TODO: Add the Player to the Repository - CHECK
-            _repository.player = player; // pulls player data from the parameter
+            _repository.PlayerOne = player; // pulls player data from the parameter
 
             // TODO: Build a new SpinItViewModel object with data from the Player and pass it to the View - CHECK
             SpinViewModel sVM = new SpinViewModel();
-            sVM.FirstName = _repository.player.FirstName;
-            sVM.Balance = _repository.player.Balance;
-            sVM.Luck = _repository.player.Luck;
+            sVM.FirstName = player.FirstName;
+            sVM.Balance = player.StartingBalance;
+            sVM.Luck = player.Luck;
 
             return RedirectToAction("SpinIt", sVM); 
         }
@@ -56,12 +56,15 @@ namespace LuckySpin.Controllers
         {
             SpinViewModel spinVM = new SpinViewModel
             {
+                FirstName = spinViewModel.FirstName,
+                Balance = spinViewModel.Balance,
                 Luck = spinViewModel.Luck,
                 A = random.Next(1, 10),
                 B = random.Next(1, 10),
                 C = random.Next(1, 10)
             };
 
+            
             spinVM.IsWinning = (spinVM.A == spinVM.Luck || spinVM.B == spinVM.Luck || spinVM.C == spinVM.Luck);
 
             //Add to Spin Repository
