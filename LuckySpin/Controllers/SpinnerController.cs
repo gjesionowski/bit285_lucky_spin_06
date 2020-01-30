@@ -11,16 +11,16 @@ namespace LuckySpin.Controllers
     public class SpinnerController : Controller
     {
         Random random;
-        Repository repository = new Repository();
+        Repository _repository;
 
         /***
          * Controller Constructor
          */
-        public SpinnerController(Repository repositoryIn)
+        public SpinnerController(Repository repository)
         {
             random = new Random();
             //TODO: Inject the Repository singleton
-            repository = repositoryIn; // = new Repository();
+            _repository = repository; 
         }
 
         /***
@@ -38,15 +38,15 @@ namespace LuckySpin.Controllers
 
             //Repository repository = new Repository();
             // TODO: Add the Player to the Repository - CHECK
-            repository.player = player; // pulls from the parameter
+            _repository.player = player; // pulls player data from the parameter
 
             // TODO: Build a new SpinItViewModel object with data from the Player and pass it to the View - CHECK
-            SpinViewModel spinViewModel = new SpinViewModel();
-            spinViewModel.FirstName = player.FirstName;
-            spinViewModel.Balance = player.Balance;
-            spinViewModel.Luck = player.Luck;
+            SpinViewModel sVM = new SpinViewModel();
+            sVM.FirstName = _repository.player.FirstName;
+            sVM.Balance = _repository.player.Balance;
+            sVM.Luck = _repository.player.Luck;
 
-            return RedirectToAction("SpinIt", spinViewModel); 
+            return RedirectToAction("SpinIt", sVM); 
         }
 
         /***
@@ -54,7 +54,7 @@ namespace LuckySpin.Controllers
          **/  
          public IActionResult SpinIt(SpinViewModel spinViewModel) //TODO: replace the parameter with a ViewModel - CHECK
         {
-            Spin spin = new Spin
+            SpinViewModel spinVM = new SpinViewModel
             {
                 Luck = spinViewModel.Luck,
                 A = random.Next(1, 10),
@@ -62,17 +62,17 @@ namespace LuckySpin.Controllers
                 C = random.Next(1, 10)
             };
 
-            spin.IsWinning = (spin.A == spin.Luck || spin.B == spin.Luck || spin.C == spin.Luck);
+            spinVM.IsWinning = (spinVM.A == spinVM.Luck || spinVM.B == spinVM.Luck || spinVM.C == spinVM.Luck);
 
             //Add to Spin Repository
-            repository.AddSpin(spin);
+            _repository.AddSpin(spinVM);
 
             //TODO: Clean up ViewBag using a SpinIt ViewModel instead
-            ViewBag.ImgDisplay = (spin.IsWinning) ? "block" : "none";
+            ViewBag.ImgDisplay = (spinViewModel.IsWinning) ? "block" : "none";
             ViewBag.FirstName = spinViewModel.FirstName;
             ViewBag.Balance = spinViewModel.Balance;
 
-            return View("SpinIt", spinViewModel);
+            return View("SpinIt", spinVM);
         }
 
         /***
@@ -80,7 +80,7 @@ namespace LuckySpin.Controllers
          **/
          public IActionResult LuckList()
         {
-                return View(repository.PlayerSpins);
+                return View(_repository.PlayerSpins);
         }
     }
 }
