@@ -75,8 +75,8 @@ namespace LuckySpin.Controllers
             _repository.AddSpin(spinVM);
 
             //TODO: Clean up ViewBag using a SpinIt ViewModel instead
-            ViewBag.ImgDisplay = (spinViewModel.IsWinning) ? "block" : "none";
-            ViewBag.FirstName = spinViewModel.FirstName;
+            ViewBag.ImgDisplay = (spinVM.IsWinning) ? "block" : "none";
+            ViewBag.FirstName = spinVM.FirstName;
             ViewBag.Balance = _repository.PlayerOne.Balance;
 
             return View("SpinIt", spinVM);
